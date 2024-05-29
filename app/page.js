@@ -40,6 +40,11 @@ const FileUploadForm = () => {
         setResponseMessage(`File uploaded successfully`);
         setUploadedFileName(res.data.url);
         setSelectedFile(null);
+        const filename = res.data.url;
+        const url = res.data.url;
+        const uploadToDB = await axios.get(
+          `/api/upload?filename=${filename}&url=${url}`
+        );
       } else {
         setResponseMessage(`file already exist`);
         setUploadedFileName(res.data.message);
@@ -71,6 +76,9 @@ const FileUploadForm = () => {
         setResponseMessage("File deleted successfully.");
         setUploadedFileName("");
         setSelectedFile(null);
+        const filename = uploadedFileName;
+        const deleteDB = await axios.delete(`/api/upload?filename=${filename}`);
+        console.log(deleteDB);
       } else {
         setResponseMessage(`Error: ${res.data.message}`);
         setSelectedFile(null);
