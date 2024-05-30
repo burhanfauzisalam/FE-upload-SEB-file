@@ -9,6 +9,7 @@ const FileUploadForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState("");
+  const [uploadState, setUploadState] = useState(true);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -45,15 +46,18 @@ const FileUploadForm = () => {
         const uploadToDB = await axios.get(
           `/api/upload?filename=${filename}&url=${url}`
         );
+        setUploadState(false);
       } else {
         setResponseMessage(`file already exist`);
         setUploadedFileName(res.data.message);
         setSelectedFile(null);
+        setUploadState(false);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
       setResponseMessage("Error uploading file");
       setSelectedFile(null);
+      setUploadState(false);
     }
   };
 
@@ -78,15 +82,17 @@ const FileUploadForm = () => {
         setSelectedFile(null);
         const filename = uploadedFileName;
         const deleteDB = await axios.delete(`/api/upload?filename=${filename}`);
-        console.log(deleteDB);
+        setUploadState(false);
       } else {
         setResponseMessage(`Error: ${res.data.message}`);
         setSelectedFile(null);
+        setUploadState(false);
       }
     } catch (error) {
       console.error("Error deleting file:", error);
       setResponseMessage("Error deleting file");
       setSelectedFile(null);
+      setUploadState(false);
     }
   };
   const goTo = () => {
@@ -96,10 +102,13 @@ const FileUploadForm = () => {
   return (
     <>
       <div className="container">
-        <form onSubmit={handleSubmit}>
-          <input type="file" onChange={handleFileChange} />
-          <button type="submit">Upload</button>
-        </form>
+        {uploadState && (
+          <form onSubmit={handleSubmit}>
+            <input type="file" onChange={handleFileChange} />
+            <button type="submit">Upload</button>
+          </form>
+        )}
+
         <div>
           {responseMessage && <div id="response">{responseMessage}</div>}
           {uploadedFileName && (
