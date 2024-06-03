@@ -6,8 +6,18 @@ const teacherSchema = new mongoose.Schema({
     require: true,
     unique: true,
   },
+  username: {
+    type: String,
+    require: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    require: true,
+  },
 });
 
-const Teacher = mongoose.model("Teacher", teacherSchema);
+const Teacher =
+  mongoose.models.Teacher || mongoose.model("Teacher", teacherSchema);
 
 export default Teacher;

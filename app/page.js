@@ -63,6 +63,7 @@ const FileUploadForm = () => {
     } catch (error) {
       console.error("Error uploading file:", error);
       setResponseMessage("Error uploading file");
+      setUrlFileName("");
       setSelectedFile(null);
       setUploadState(false);
     }
