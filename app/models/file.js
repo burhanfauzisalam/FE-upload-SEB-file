@@ -10,6 +10,22 @@ const fileSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  grade: {
+    type: [Number],
+    require: true,
+  },
+  subject: {
+    type: String,
+    require: true,
+  },
+  assessment: {
+    type: String,
+    require: true,
+  },
+  teacher: {
+    type: String,
+    require: true,
+  },
 });
 
 const File = mongoose.model("File", fileSchema);

@@ -3,12 +3,12 @@
 import axios from "axios";
 import { useState } from "react";
 import "./style/style.css";
-// import "./globals.css";
 
 const FileUploadForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState("");
+  const [urlFileName, setUrlFileName] = useState("");
   const [uploadState, setUploadState] = useState(true);
 
   const handleFileChange = (event) => {
@@ -39,17 +39,24 @@ const FileUploadForm = () => {
 
       if (res.data.status === "success") {
         setResponseMessage(`File uploaded successfully`);
-        setUploadedFileName(res.data.url);
+        setUploadedFileName(res.data.filename);
+        setUrlFileName(res.data.url);
         setSelectedFile(null);
-        const filename = res.data.url;
+        const filename = res.data.filename;
         const url = res.data.url;
-        const uploadToDB = await axios.get(
-          `/api/upload?filename=${filename}&url=${url}`
-        );
+        const grade = [5];
+        const subject = "Biology";
+        const assessment = "midterm";
+        const teacher = "Caroline Lumengga";
+
+        const data = { filename, url, grade, subject, assessment, teacher };
+
+        const uploadToDB = await axios.post(`/api/upload`, data);
         setUploadState(false);
       } else {
         setResponseMessage(`file already exist`);
-        setUploadedFileName(res.data.message);
+        // setUploadedFileName(res.data.filename);
+        setUrlFileName(res.data.message);
         setSelectedFile(null);
         setUploadState(false);
       }
@@ -62,14 +69,14 @@ const FileUploadForm = () => {
   };
 
   const handleDelete = async () => {
-    if (!uploadedFileName) {
+    if (!urlFileName) {
       alert("No file to delete");
       return;
     }
 
     try {
       const formData = new FormData();
-      formData.append("filename", uploadedFileName.split("/").pop());
+      formData.append("filename", urlFileName);
 
       const res = await axios.post(
         "https://seb-test.000webhostapp.com/delete.php",
@@ -78,10 +85,9 @@ const FileUploadForm = () => {
 
       if (res.data.status === "success") {
         setResponseMessage("File deleted successfully.");
-        setUploadedFileName("");
+        setUrlFileName("");
         setSelectedFile(null);
-        const filename = uploadedFileName;
-        const deleteDB = await axios.delete(`/api/upload?filename=${filename}`);
+        const deleteDB = await axios.delete(`/api/upload?url=${urlFileName}`);
         setUploadState(false);
       } else {
         setResponseMessage(`Error: ${res.data.message}`);
@@ -96,7 +102,7 @@ const FileUploadForm = () => {
     }
   };
   const goTo = () => {
-    window.location.href = uploadedFileName;
+    window.location.href = urlFileName;
   };
 
   return (
@@ -111,9 +117,9 @@ const FileUploadForm = () => {
 
         <div>
           {responseMessage && <div id="response">{responseMessage}</div>}
-          {uploadedFileName && (
+          {urlFileName && (
             <div>
-              <h5>{uploadedFileName}</h5>
+              <h5>{urlFileName}</h5>
               <button onClick={handleDelete}>Delete File</button>
               <button onClick={goTo}>Open</button>
             </div>
