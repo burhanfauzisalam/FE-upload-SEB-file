@@ -35,7 +35,7 @@ export async function GET(request) {
     const teacher = await Teacher.findOne({ username }).select("-password");
 
     if (!teacher) {
-      return new Response(JSON.stringify({ error: "teacher not found" }), {
+      return new Response(JSON.stringify({ message: "teacher not found" }), {
         status: 404,
         headers: {
           "Content-Type": "application/json",
@@ -50,6 +50,6 @@ export async function GET(request) {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
