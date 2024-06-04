@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/dashboard", // Gantilah dengan path tujuan yang diinginkan
+        destination: "/login", // Gantilah dengan path tujuan yang diinginkan
         permanent: true, // Ganti menjadi false jika ingin menggunakan redirect sementara (status kode 302)
       },
     ];

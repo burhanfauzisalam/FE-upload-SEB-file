@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const teacherSchema = new mongoose.Schema({
+  userID: {
+    type: String,
+    require: true,
+    unique: true,
+  },
   name: {
     type: String,
     require: true,
@@ -12,6 +17,10 @@ const teacherSchema = new mongoose.Schema({
     unique: true,
   },
   password: {
+    type: String,
+    require: true,
+  },
+  role: {
     type: String,
     require: true,
   },

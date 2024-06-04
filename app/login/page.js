@@ -24,9 +24,12 @@ const LoginForm = () => {
     try {
       const data = { username, password };
       const res = await axios.post(`/api/login`, data);
-      Cookies.set("id", res.data._id, { expires: 7 });
-      // console.log(res.data);
-      push("/dashboard");
+      const role = res.data.role;
+      role === "teacher"
+        ? Cookies.set("id-teacher", res.data._id, { expires: 1 / 24 })
+        : Cookies.set("id-student", res.data._id, { expires: 1 / 24 });
+      // console.log(res);
+      push("/");
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
@@ -39,7 +42,7 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2 className="login-title">Login teacher</h2>
+        <h2 className="login-title">Login</h2>
         <div className="form-group">
           <label htmlFor="username" className="form-label">
             Username:
