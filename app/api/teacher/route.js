@@ -25,14 +25,14 @@ export async function GET(request) {
   try {
     await connectToDatabase();
     const { searchParams } = new URL(request.url);
-    const username = searchParams.get("username");
-    if (!username) {
+    const id = searchParams.get("id");
+    if (!id) {
       return NextResponse.json(
-        { message: "please input a username." },
+        { message: "please input ID." },
         { status: 400 }
       );
     }
-    const teacher = await Teacher.findOne({ username }).select("-password");
+    const teacher = await Teacher.findOne({ _id: id }).select("-password");
 
     if (!teacher) {
       return new Response(JSON.stringify({ message: "teacher not found" }), {
