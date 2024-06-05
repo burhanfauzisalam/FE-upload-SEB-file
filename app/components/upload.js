@@ -33,7 +33,7 @@ const FileUploadForm = () => {
       formData.append("file", selectedFile);
 
       const res = await axios.post(
-        "https://seb-test.000webhostapp.com/upload.php",
+        "https://assessment.nola.sch.id/upload.php",
         // "http://localhost/seb-file/upload.php",
         formData,
         {
@@ -92,7 +92,7 @@ const FileUploadForm = () => {
       formData.append("filename", urlFileName);
 
       const res = await axios.post(
-        "https://seb-test.000webhostapp.com/delete.php",
+        "https://assessment.nola.sch.id/delete.php",
         formData
       );
 
