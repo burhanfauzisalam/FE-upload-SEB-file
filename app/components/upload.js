@@ -142,17 +142,18 @@ const FileUploadForm = () => {
           {urlFileName && (
             <div>
               <h5>{urlFileName}</h5>
-              {!loading ? (
+              {!loading && (
                 <>
-                  <button onClick={handleDelete} className="btn btn-danger">
+                  <button
+                    onClick={handleDelete}
+                    className="btn btn-danger mr-2 mt-2"
+                  >
                     Delete File
                   </button>
-                  <button onClick={goTo} className="btn btn-success">
+                  <button onClick={goTo} className="btn btn-success  mt-2">
                     Open
                   </button>
                 </>
-              ) : (
-                "Deleting..."
               )}
             </div>
           )}

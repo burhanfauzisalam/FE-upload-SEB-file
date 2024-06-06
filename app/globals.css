@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* styles/globals.css */
+
+.navbar-custom {
+  background-color: #b3cde0; /* Warna biru muda */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .nav-dropdown-item {
+  color: #000000 !important; /* Warna teks putih */
+}
+
+.navbar-custom .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* .navbar-custom .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+} */
+
+.navbar-custom .nav-link:hover {
+  color: #2e404d !important; /* Warna teks saat hover */
+  background-color: #d8d8d8 !important; /* Latar belakang saat hover */
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

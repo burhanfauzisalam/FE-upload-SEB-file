@@ -1,15 +1,8 @@
-import React from "react";
+"use client";
 import FileUploadForm from "../components/upload";
 
-const teacherDashboard = () => {
-  return (
-    <>
-      <div className="justify">
-        <div className="text-center">teacherDashboard</div>
-        <FileUploadForm />
-      </div>
-    </>
-  );
+const Dashboard = () => {
+  return <FileUploadForm />;
 };
 
-export default teacherDashboard;
+export default Dashboard;
