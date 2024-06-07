@@ -2,7 +2,8 @@
 
 import axios from "axios";
 import { useState } from "react";
-import "../style/style.css";
+// import "../style/style.css";
+import styles from "../style/fileUpload.module.css";
 import Cookies from "js-cookie";
 
 const FileUploadForm = () => {
@@ -62,6 +63,7 @@ const FileUploadForm = () => {
         const uploadToDB = await axios.post(`/api/upload`, data);
         setUploadState(false);
         setLoading(false);
+        window.location.href = "/";
       } else {
         setResponseMessage(`file already exist`);
         // setUploadedFileName(res.data.filename);
@@ -80,86 +82,71 @@ const FileUploadForm = () => {
     }
   };
 
-  const handleDelete = async () => {
-    if (!urlFileName) {
-      alert("No file to delete");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append("filename", urlFileName);
-
-      const res = await axios.post(
-        "https://assessment.nola.sch.id/delete.php",
-        formData
-      );
-
-      if (res.data.status === "success") {
-        setResponseMessage("File deleted successfully.");
-        setUrlFileName("");
-        setSelectedFile(null);
-        const deleteDB = await axios.delete(`/api/upload?url=${urlFileName}`);
-        setLoading(false);
-        setUploadState(false);
-      } else {
-        setResponseMessage(`Error: ${res.data.message}`);
-        setSelectedFile(null);
-        setLoading(false);
-        setUploadState(false);
-      }
-    } catch (error) {
-      console.error("Error deleting file:", error);
-      setResponseMessage("Error deleting file");
-      setSelectedFile(null);
-      setLoading(false);
-      setUploadState(false);
-    }
-  };
-  const goTo = () => {
-    window.location.href = urlFileName;
+  const reload = () => {
+    window.location.reload();
   };
 
   return (
-    <>
-      <div className="container">
-        {uploadState && (
-          <form onSubmit={handleSubmit}>
-            <input type="file" onChange={handleFileChange} />
+    <div className={`${styles.form}`} style={{ marginTop: "20px" }}>
+      {!responseMessage && (
+        <form
+          onSubmit={handleSubmit}
+          className={styles.form}
+          style={{ marginTop: "20px" }}
+        >
+          <div className={styles.inputGroup}>
+            <label htmlFor="fileInput" className={styles.label}>
+              Select File
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              onChange={handleFileChange}
+              className={`${styles.input} ${styles.fileInput}`}
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="textInput" className={styles.label}>
+              Enter Text
+            </label>
+            <input
+              id="textInput"
+              type="text"
+              placeholder="Enter some text"
+              value=""
+              // onChange={handleTextInputChange}
+              className={`${styles.input} ${styles.textInput} form-control`}
+            />
+          </div>
+          <br />
+          <div className={styles.buttonGroup}>
             {!loading
               ? selectedFile && (
-                  <button type="submit" className="btn btn-info">
+                  <button
+                    type="submit"
+                    className={`${styles.btn} ${styles.btnInfo}`}
+                  >
                     Upload
                   </button>
                 )
               : "Uploading..."}
-          </form>
+          </div>
+        </form>
+      )}
+      <div className={styles.buttonGroup}>
+        {responseMessage && (
+          <>
+            <div className={`${styles.response} mb-10`}>{responseMessage}</div>
+            <button
+              className={`${styles.btn} ${styles.btnInfo}`}
+              onClick={reload}
+            >
+              New Upload
+            </button>
+          </>
         )}
-
-        <div>
-          {responseMessage && <div id="response">{responseMessage}</div>}
-          {urlFileName && (
-            <div>
-              <h5>{urlFileName}</h5>
-              {!loading && (
-                <>
-                  <button
-                    onClick={handleDelete}
-                    className="btn btn-danger mr-2 mt-2"
-                  >
-                    Delete File
-                  </button>
-                  <button onClick={goTo} className="btn btn-success  mt-2">
-                    Open
-                  </button>
-                </>
-              )}
-            </div>
-          )}
-        </div>
       </div>
-    </>
+    </div>
   );
 };
 

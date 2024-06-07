@@ -1,0 +1,68 @@
+/* YourComponent.module.css */
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.textInput {
+  width: 50%; /* Set the width to a smaller size */
+  transition: all 0.3s ease;
+}
+
+.textInput:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.buttonGroup {
+  text-align: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnInfo {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btnInfo:hover {
+  background-color: #138496;
+}
+.response {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #28a745;
+}

@@ -9,7 +9,7 @@
 }
 
 .btn-custom {
-  display: inline-block;
+  /* display: inline-block; */
   margin: 5px;
 }
 
@@ -20,7 +20,7 @@
 }
 
 input[type="file"] {
-  display: block;
+  /* display: block; */
   margin: 20px 0;
 }
 

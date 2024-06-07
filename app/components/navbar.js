@@ -2,13 +2,28 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { MdLogout } from "react-icons/md";
 import Cookies from "js-cookie";
+import { FaUserAlt } from "react-icons/fa";
+import axios from "axios";
 
 const MyNavbar = () => {
   const [expanded, setExpanded] = useState(false);
+  const [user, setUser] = useState("");
+
+  const id = Cookies.get("id-teacher");
+  // console.log(id);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await axios.get(`/api/teacher?id=${id}`);
+      setUser(res.data.teacher.name);
+    };
+    getUser();
+  }, []);
+
   const logout = () => {
     Cookies.remove("id-teacher");
     window.location.reload;
@@ -25,28 +40,38 @@ const MyNavbar = () => {
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} href="/">
+            {/* <Nav.Link as={Link} href="/">
               Home
-            </Nav.Link>
-            {/* <Nav.Link as={Link} href="/about">
-              About
             </Nav.Link> */}
+            <Nav.Link as={Link} href="/teacher/upload">
+              Upload
+            </Nav.Link>
             <NavDropdown title="Assessment" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} href="/action1">
+              <NavDropdown.Item as={Link} href="/">
                 Quiz
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} href="/action2">
+              <NavDropdown.Item as={Link} href="/">
                 Mid-term
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} href="/action3">
+              <NavDropdown.Item as={Link} href="/">
                 Final assessment
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <hr></hr>
           <Nav className="ms-auto">
-            <Nav.Link as={Link} href="#" onClick={logout}>
-              <MdLogout />
+            <Nav.Link as={Link} href="#" className="d-flex align-items-center">
+              <FaUserAlt />
+              <span className="ml-2">{user}</span>
+            </Nav.Link>
+
+            <Nav.Link
+              as={Link}
+              href="#"
+              onClick={logout}
+              className="d-flex align-items-center"
+            >
+              <span className="mr-2">Logout</span> <MdLogout />
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
