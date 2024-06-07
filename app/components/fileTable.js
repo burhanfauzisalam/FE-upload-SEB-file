@@ -5,11 +5,25 @@ import styles from "../style/fileTable.module.css";
 import axios from "axios";
 import { IoMdOpen } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { IoMdCopy } from "react-icons/io";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const FileTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
+
+  useEffect(() => {
+    // Menginisialisasi tooltip Bootstrap
+    const bootstrap = require("bootstrap");
+    const tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-toggle="tooltip"]')
+    );
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -23,6 +37,16 @@ const FileTable = () => {
     getData();
   }, []);
 
+  const handleCopyClick = (url) => {
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        alert("Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Could not copy text: ", err);
+      });
+  };
   const handleDelete = async (urlFileName) => {
     if (!urlFileName) {
       alert("No file to delete");
@@ -94,13 +118,29 @@ const FileTable = () => {
                     <button
                       className="btn btn-primary"
                       onClick={() => handleOpen(item.url)}
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Open"
                     >
                       <IoMdOpen />
+                    </button>{" "}
+                    <button
+                      className="btn btn-success"
+                      onClick={() => handleCopyClick(item.url)}
+                      disabled={loading}
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Copy URL"
+                    >
+                      <IoMdCopy />
                     </button>{" "}
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(item.url)}
                       disabled={loading}
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Delete file"
                     >
                       <RiDeleteBin6Line />
                     </button>

@@ -4,6 +4,16 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
+  /* border: 1px solid #ddd; */
+  border-radius: 10px;
+  /* background-color: #f9f9f9; */
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
@@ -28,21 +38,26 @@
   border-radius: 5px;
   font-size: 16px;
   color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.textInput {
-  width: 50%; /* Set the width to a smaller size */
-  transition: all 0.3s ease;
-}
-
-.textInput:focus {
+.input:focus {
   border-color: #66afe9;
   outline: none;
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
+.textInput {
+  width: 50%;
+  min-width: 150px;
+}
+
 .buttonGroup {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  gap: 10px;
 }
 
 .btn {
@@ -61,8 +76,49 @@
 .btnInfo:hover {
   background-color: #138496;
 }
+
 .response {
   margin-top: 20px;
   font-size: 16px;
   color: #28a745;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-wrap: nowrap; /* Semua elemen akan tetap berada dalam satu baris */
+  gap: 10px; /* Jarak antar elemen checkbox */
+  margin-bottom: 10px;
+}
+
+.checkboxInput,
+.checkboxLabel {
+  flex: 0 1 auto;
+  margin: 2px;
+}
+
+/* Media Queries untuk Responsivitas */
+@media (max-width: 600px) {
+  .form {
+    padding: 10px;
+  }
+
+  .textInput {
+    width: 100%;
+  }
+}
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dropdown:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
 }
