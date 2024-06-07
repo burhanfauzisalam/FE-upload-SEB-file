@@ -6,8 +6,6 @@ import axios from "axios";
 import { IoMdOpen } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoMdCopy } from "react-icons/io";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const FileTable = () => {
   const [data, setData] = useState([]);
