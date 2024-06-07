@@ -12,16 +12,16 @@ const FileTable = () => {
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
 
-  useEffect(() => {
-    // Menginisialisasi tooltip Bootstrap
-    const bootstrap = require("bootstrap");
-    const tooltipTriggerList = [].slice.call(
-      document.querySelectorAll('[data-toggle="tooltip"]')
-    );
-    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-  }, []);
+  // useEffect(() => {
+  //   // Menginisialisasi tooltip Bootstrap
+  //   const bootstrap = require("bootstrap");
+  //   const tooltipTriggerList = [].slice.call(
+  //     document.querySelectorAll('[data-toggle="tooltip"]')
+  //   );
+  //   const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  //     return new bootstrap.Tooltip(tooltipTriggerEl);
+  //   });
+  // }, []);
 
   useEffect(() => {
     const getData = async () => {
