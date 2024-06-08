@@ -77,7 +77,9 @@ const FileUploadForm = () => {
         setUrlFileName(res.data.url);
         setSelectedFile(null);
 
-        const teacherData = await axios.get(`/api/teacher?id=${id}`);
+        const teacherData = await axios.get(
+          `https://api-seb-file.vercel.app/api/teacher?id=${id}`
+        );
         const filename = res.data.filename;
         const url = res.data.url;
         const grade = Object.keys(selectedGrades).filter(

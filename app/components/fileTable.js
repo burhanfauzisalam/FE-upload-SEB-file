@@ -64,7 +64,9 @@ const FileTable = () => {
 
       if (res.data.status === "success") {
         setResponseMessage("File deleted successfully.");
-        await axios.delete(`/api/upload?url=${urlFileName}`);
+        await axios.delete(
+          `https://api-seb-file.vercel.app/api/seb?url=${urlFileName}`
+        );
         // Remove deleted file from the data state
         setData((prevData) =>
           prevData.filter((item) => item.url !== urlFileName)
