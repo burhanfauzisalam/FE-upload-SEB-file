@@ -1,12 +1,13 @@
 "use client";
 
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import "../style/style.css";
 import styles from "../style/fileUpload.module.css";
 import Cookies from "js-cookie";
 
 const FileUploadForm = () => {
+  const [user, setUser] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState("");
@@ -31,7 +32,7 @@ const FileUploadForm = () => {
   const [subject, setSubject] = useState("");
 
   // const cookieStore = useCookies();
-  const id = Cookies.get("id-teacher");
+  const token = Cookies.get("token");
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -70,16 +71,20 @@ const FileUploadForm = () => {
           },
         }
       );
-
+      const getUser = await axios.post(
+        `https://api-seb-file.vercel.app/api/decode`,
+        {
+          token,
+        }
+      );
+      setUser(getUser.data);
       if (res.data.status === "success") {
         setResponseMessage(`File uploaded successfully`);
         setUploadedFileName(res.data.filename);
         setUrlFileName(res.data.url);
         setSelectedFile(null);
 
-        const teacherData = await axios.get(
-          `https://api-seb-file.vercel.app/api/teacher?id=${id}`
-        );
+        // const teacherData = user.name;
         const filename = res.data.filename;
         const url = res.data.url;
         const grade = Object.keys(selectedGrades).filter(
@@ -87,7 +92,7 @@ const FileUploadForm = () => {
         );
         // const subject = subject;
         const assessment = examType;
-        const teacher = teacherData.data.teacher.name;
+        const teacher = user.name;
 
         const data = { filename, url, grade, subject, assessment, teacher };
 
@@ -108,6 +113,7 @@ const FileUploadForm = () => {
       }
     } catch (error) {
       console.error("Error uploading file:", error);
+      console.log(error);
       setResponseMessage("Error uploading file");
       setUrlFileName("");
       setSelectedFile(null);
