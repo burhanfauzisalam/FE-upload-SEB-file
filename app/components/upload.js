@@ -89,7 +89,10 @@ const FileUploadForm = () => {
 
         const data = { filename, url, grade, subject, assessment, teacher };
 
-        const uploadToDB = await axios.post(`/api/upload`, data);
+        const uploadToDB = await axios.post(
+          `https://api-seb-file.vercel.app/api/seb`,
+          data
+        );
         setUploadState(false);
         setLoading(false);
         window.location.href = "/";

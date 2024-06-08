@@ -26,7 +26,7 @@ const FileTable = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get(`/api/file`);
+        const res = await axios.get(`https://api-seb-file.vercel.app/api/seb`);
         setData(res.data.reverse());
       } catch (error) {
         console.error("Error fetching data:", error);
