@@ -115,7 +115,7 @@ const FileTable = () => {
                 <td>{item.assessment}</td>
                 <td>{item.teacher}</td>
                 <td>
-                  <div className={styles.buttonGroup}>
+                  <div className="mb-2">
                     <button
                       className="btn btn-primary"
                       onClick={() => handleOpen(item.url)}
