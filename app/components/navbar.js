@@ -13,19 +13,22 @@ const MyNavbar = () => {
   const [expanded, setExpanded] = useState(false);
   const [user, setUser] = useState("");
 
-  const id = Cookies.get("id-teacher");
-  // console.log(id);
+  const token = Cookies.get("token");
+  // console.log(token);
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`/api/teacher?id=${id}`);
-      setUser(res.data.teacher.name);
+      const res = await axios.post(
+        `https://api-seb-file.vercel.app/api/decode`,
+        { token }
+      );
+      setUser(res.data.name);
     };
     getUser();
   }, []);
 
   const logout = () => {
-    Cookies.remove("id-teacher");
+    Cookies.remove("token");
     window.location.reload;
   };
   return (

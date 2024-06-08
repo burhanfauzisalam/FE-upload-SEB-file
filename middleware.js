@@ -3,14 +3,14 @@ import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-  const session_t = request.cookies.get("id-teacher");
+  const token = request.cookies.get("token");
   const session_s = request.cookies.get("id-student");
 
   const url = request.nextUrl.clone();
 
   // If the request is for a teacher path
   if (url.pathname.startsWith("/teacher")) {
-    if (!session_t) {
+    if (!token) {
       // If not authenticated as a teacher, redirect to login
       return NextResponse.redirect(new URL("/login", request.url));
     }
@@ -27,7 +27,7 @@ export async function middleware(request) {
   // If the request is for the login path
   if (url.pathname.startsWith("/login")) {
     // If already authenticated as a teacher, redirect to the teacher dashboard
-    if (session_t) {
+    if (token) {
       return NextResponse.redirect(new URL("/teacher", request.url));
     }
     // If already authenticated as a student, redirect to the student dashboard

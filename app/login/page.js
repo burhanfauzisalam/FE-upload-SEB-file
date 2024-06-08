@@ -23,12 +23,13 @@ const LoginForm = () => {
     }
     try {
       const data = { username, password };
-      const res = await axios.post(`/api/login`, data);
-      const role = res.data.role;
-      role === "teacher"
-        ? Cookies.set("id-teacher", res.data._id, { expires: 1 / 24 })
-        : Cookies.set("id-student", res.data._id, { expires: 1 / 24 });
-      // console.log(res);
+      const res = await axios.post(
+        `https://api-seb-file.vercel.app/api/login`,
+        data
+      );
+      Cookies.set("token", res.data, { expires: 1 / 24 });
+
+      console.log(res);
       push("/");
       setLoading(false);
     } catch (error) {
