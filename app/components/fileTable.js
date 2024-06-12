@@ -6,12 +6,13 @@ import axios from "axios";
 import { IoMdOpen } from "react-icons/io";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoMdCopy } from "react-icons/io";
+import Cookies from "js-cookie";
 
 const FileTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
-
+  const token = Cookies.get("token");
   // useEffect(() => {
   //   // Menginisialisasi tooltip Bootstrap
   //   const bootstrap = require("bootstrap");
@@ -26,7 +27,11 @@ const FileTable = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get(`https://api-seb-file.vercel.app/api/seb`);
+        const res = await axios.get(
+          `https://api-seb-file.vercel.app/api/seb`,
+          {},
+          { headers: { token } }
+        );
         setData(res.data.reverse());
       } catch (error) {
         console.error("Error fetching data:", error);
