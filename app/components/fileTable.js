@@ -29,12 +29,12 @@ const FileTable = () => {
       try {
         const res = await axios.get(
           `https://api-seb-file.vercel.app/api/seb`,
-          {},
-          { headers: { token } }
+          // `http://192.168.0.116:5000/api/seb`,
+          { headers: { token: token } }
         );
         setData(res.data.reverse());
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Gagal mengambil data:", error);
       }
     };
     getData();
