@@ -18,11 +18,21 @@ const MyNavbar = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.post(
-        `https://api-seb-file.vercel.app/api/decode`,
-        { token }
-      );
-      setUser(res.data.name);
+      try {
+        const res = await axios.post(
+          `https://api-seb-file.vercel.app/api/decode`,
+          // `http://192.168.0.116:5000/api/decode`,
+          {},
+          { headers: { token: token } }
+          // { token }
+        );
+        setUser(res.data.name);
+        // console.log(res.status);
+      } catch (error) {
+        // console.log("Error fetching data:", error);
+        Cookies.remove("token");
+        window.location.reload();
+      }
     };
     getUser();
   }, []);

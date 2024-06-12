@@ -61,9 +61,23 @@ const FileUploadForm = () => {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
+      try {
+        const getUser = await axios.post(
+          `https://api-seb-file.vercel.app/api/decode`,
+          {},
+          {
+            headers: { token },
+          }
+        );
+        setUser(getUser.data);
+      } catch (error) {
+        console.log(error);
+        Cookies.remove("token");
+        window.location.reload();
+      }
+
       const res = await axios.post(
         "https://assessment.nola.sch.id/upload.php",
-        // "http://localhost/seb-file/upload.php",
         formData,
         {
           headers: {
@@ -71,38 +85,39 @@ const FileUploadForm = () => {
           },
         }
       );
-      const getUser = await axios.post(
-        `https://api-seb-file.vercel.app/api/decode`,
-        {
-          token,
-        }
-      );
-      setUser(getUser.data);
+
       if (res.data.status === "success") {
         setResponseMessage(`File uploaded successfully`);
         setUploadedFileName(res.data.filename);
         setUrlFileName(res.data.url);
         setSelectedFile(null);
 
-        // const teacherData = user.name;
-        const filename = res.data.filename;
-        const url = res.data.url;
-        const grade = Object.keys(selectedGrades).filter(
-          (key) => selectedGrades[key]
-        );
-        // const subject = subject;
-        const assessment = examType;
-        const teacher = user.name;
+        try {
+          // const teacherData = user.name;
+          const filename = res.data.filename;
+          const url = res.data.url;
+          const grade = Object.keys(selectedGrades).filter(
+            (key) => selectedGrades[key]
+          );
+          // const subject = subject;
+          const assessment = examType;
+          const teacher = user.name;
 
-        const data = { filename, url, grade, subject, assessment, teacher };
+          const data = { filename, url, grade, subject, assessment, teacher };
 
-        const uploadToDB = await axios.post(
-          `https://api-seb-file.vercel.app/api/seb`,
-          data
-        );
-        setUploadState(false);
-        setLoading(false);
-        window.location.href = "/";
+          const uploadToDB = await axios.post(
+            `https://api-seb-file.vercel.app/api/seb`,
+            data,
+            { headers: { token } }
+          );
+          setUploadState(false);
+          setLoading(false);
+          window.location.href = "/";
+        } catch (error) {
+          console.log(error);
+          Cookies.remove("token");
+          window.location.reload();
+        }
       } else {
         setResponseMessage(`file already exist`);
         // setUploadedFileName(res.data.filename);

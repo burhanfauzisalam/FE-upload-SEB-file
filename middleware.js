@@ -8,8 +8,8 @@ export async function middleware(request) {
 
   const url = request.nextUrl.clone();
 
-  // If the request is for a teacher path
   if (url.pathname.startsWith("/teacher")) {
+    // If the request is for a teacher path
     if (!token) {
       // If not authenticated as a teacher, redirect to login
       return NextResponse.redirect(new URL("/login", request.url));

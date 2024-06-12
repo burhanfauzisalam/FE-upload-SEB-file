@@ -34,7 +34,7 @@ const FileTable = () => {
     };
     getData();
   }, []);
-  console.log(data);
+  // console.log(data);
 
   const handleCopyClick = (url) => {
     navigator.clipboard
