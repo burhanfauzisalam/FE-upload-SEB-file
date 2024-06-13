@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
-import Dashboard from "./dashboard/page";
+import FileTable from "../components/fileTable";
 import Cookies from "js-cookie";
 import axios from "axios";
 import useStore from "../store/useStore";
+import { useEffect } from "react";
 
-const Home = () => {
+const Dashboard = () => {
   const token = Cookies.get("token");
   const { user, setUser, clearUser } = useStore();
 
@@ -19,7 +19,7 @@ const Home = () => {
           { headers: { token: token } }
         );
         setUser(res.data.name);
-        console.log(res.status);
+        // console.log(res.status);
       } catch (error) {
         // console.log("Error fetching data:", error);
         Cookies.remove("token");
@@ -31,9 +31,14 @@ const Home = () => {
       getUser();
     }
   }, []);
-  console.log(user);
-
-  return <Dashboard />;
+  // console.log(user);
+  return (
+    <>
+      <div className="container mt-10">
+        <FileTable />
+      </div>
+    </>
+  );
 };
 
-export default Home;
+export default Dashboard;

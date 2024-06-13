@@ -8,38 +8,15 @@ import { MdLogout } from "react-icons/md";
 import Cookies from "js-cookie";
 import { FaUserAlt } from "react-icons/fa";
 import axios from "axios";
+import useStore from "../store/useStore";
 
 const MyNavbar = () => {
   const [expanded, setExpanded] = useState(false);
-  const [user, setUser] = useState("");
-
-  const token = Cookies.get("token");
-  // console.log(token);
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await axios.post(
-          `https://api-seb-file.vercel.app/api/decode`,
-          // `http://192.168.0.116:5000/api/decode`,
-          {},
-          { headers: { token: token } }
-          // { token }
-        );
-        setUser(res.data.name);
-        // console.log(res.status);
-      } catch (error) {
-        // console.log("Error fetching data:", error);
-        Cookies.remove("token");
-        window.location.reload();
-      }
-    };
-    getUser();
-  }, []);
-
+  const { user } = useStore();
+  console.log(user);
   const logout = () => {
     Cookies.remove("token");
-    window.location.reload;
+    window.location.reload();
   };
   return (
     <Navbar className="navbar-custom" expand="lg" expanded={expanded}>

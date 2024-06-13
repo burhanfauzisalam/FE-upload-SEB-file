@@ -3,15 +3,12 @@ import { useState } from "react";
 import "../style/login.css"; // Import the CSS file
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const { push } = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +28,7 @@ const LoginForm = () => {
       Cookies.set("token", res.data, { expires: 1 / 24 });
 
       console.log(res);
-      push("/");
+      window.location.reload();
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
