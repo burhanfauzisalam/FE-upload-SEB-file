@@ -18,8 +18,8 @@ const Dashboard = () => {
           {},
           { headers: { token: token } }
         );
-        setUser(res.data.name);
-        // console.log(res.status);
+        setUser(res.data);
+        console.log(res.data);
       } catch (error) {
         // console.log("Error fetching data:", error);
         Cookies.remove("token");
@@ -30,8 +30,8 @@ const Dashboard = () => {
     if (token) {
       getUser();
     }
+    console.log(user);
   }, []);
-  // console.log(user);
   return (
     <>
       <div className="container mt-10">

@@ -13,7 +13,7 @@ import useStore from "../store/useStore";
 const MyNavbar = () => {
   const [expanded, setExpanded] = useState(false);
   const { user } = useStore();
-  console.log(user);
+  // console.log(user);
   const logout = () => {
     Cookies.remove("token");
     window.location.reload();
@@ -52,7 +52,7 @@ const MyNavbar = () => {
           <Nav className="ms-auto">
             <Nav.Link as={Link} href="#" className="d-flex align-items-center">
               <FaUserAlt />
-              <span className="ml-2">{user}</span>
+              <span className="ml-2">{user ? user.name : ""}</span>
             </Nav.Link>
 
             <Nav.Link
